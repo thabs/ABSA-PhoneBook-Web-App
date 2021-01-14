@@ -5,10 +5,6 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 // @material-ui/core components
 import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,7 +12,6 @@ import Divider from '@material-ui/core/Divider';
 // components
 import {SimpleAppBar, NavigationItems} from 'components';
 // style
-import {useTheme} from '@material-ui/core/styles';
 import useStyles from './Sidebar.styles';
 
 const switchRoutes = (routes) => (

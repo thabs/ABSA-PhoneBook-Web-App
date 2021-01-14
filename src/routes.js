@@ -1,5 +1,5 @@
 //! Contacts
-import {ContactsView} from 'features/contacts';
+import {ContactsView, ContactCreate} from 'features/contacts';
 
 const routes = [
   //! Contacts
@@ -7,6 +7,11 @@ const routes = [
     path: '/contacts/view',
     name: 'Contacts',
     component: ContactsView
+  },
+  {
+    path: '/contacts/create',
+    name: 'New Contact',
+    component: ContactCreate
   }
 ];
 

@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import PropTypes from 'prop-types';
+import {useHistory} from 'react-router-dom';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 //! @material-ui
@@ -15,36 +15,27 @@ import {
   Select,
   TextField,
   CircularProgress,
-  List,
-  ListItem,
-  ListItemText
+  Typography
 } from '@material-ui/core';
 // icons
-import SaveIcon from '@material-ui/icons/Save';
-import DeleteIcon from '@material-ui/icons/Delete';
+import PersonAdd from '@material-ui/icons/PersonAdd';
 //! styles
-import useStyles from './ContactDetails.styles';
+import useStyles from './ContactCreate.styles';
 //! components
 import {ErrorHandler} from 'components';
 //! Data
 import {titles} from 'models';
-import {dateToString} from 'utils';
 //! Context
 import {Context as ContactsContext} from '../state/ContactsContext';
 
-const ContactDetails = ({contact}) => {
+const ContactCreate = () => {
+  //! Navigation
+  let history = useHistory();
   //! Styles
   const classes = useStyles();
   //! Context
-  const {
-    state,
-    fetchAllContacts,
-    updateContact,
-    deleteContact,
-    clearError
-  } = useContext(ContactsContext);
+  const {state, createContact, clearError} = useContext(ContactsContext);
   const {loading, error} = state;
-  const {title, firstName, lastName, email, mobileNumber} = contact;
 
   const {
     values,
@@ -55,31 +46,30 @@ const ContactDetails = ({contact}) => {
     handleSubmit
   } = useFormik({
     initialValues: {
-      title,
-      firstName,
-      lastName,
-      email,
-      mobileNumber
+      title: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      mobileNumber: ''
     },
     validationSchema,
     onSubmit: async (values) => {
-      await updateContact(contact.id, values);
+      await createContact(values);
+      if (!error) history.push('/');
     }
   });
 
-  const removeContact = async () => {
-    await deleteContact(contact.id);
-    if (!error) fetchAllContacts();
-  };
-
   return (
     <ErrorHandler
-      title="Contact Update"
+      title="Contact Create"
       error={error}
       onClearError={clearError}>
       <form className={classes.form} onSubmit={handleSubmit} noValidate>
         <Card className={classes.root}>
           <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              New Contact
+            </Typography>
             <FormControl className={classes.formControl}>
               <InputLabel id="title">Title</InputLabel>
               <Select
@@ -161,14 +151,6 @@ const ContactDetails = ({contact}) => {
               value={values.mobileNumber}
               helperText={errors.mobileNumber}
             />
-            <List>
-              <ListItem>
-                <ListItemText
-                  primary="Date Created"
-                  secondary={dateToString(contact.dateTimeCreated)}
-                />
-              </ListItem>
-            </List>
           </CardContent>
           <CardActions>
             <div className={classes.wrapper}>
@@ -177,26 +159,9 @@ const ContactDetails = ({contact}) => {
                 variant="contained"
                 color="primary"
                 className={classes.button}
-                startIcon={<SaveIcon />}
+                startIcon={<PersonAdd />}
                 disabled={loading}>
-                Save
-              </Button>
-              {loading && (
-                <CircularProgress
-                  size={24}
-                  className={classes.buttonProgress}
-                />
-              )}
-            </div>
-            <div className={classes.wrapper}>
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.button}
-                startIcon={<DeleteIcon />}
-                disabled={loading}
-                onClick={() => removeContact()}>
-                Delete
+                Add
               </Button>
               {loading && (
                 <CircularProgress
@@ -231,14 +196,4 @@ const validationSchema = Yup.object({
     .required('Mobile number is required')
 });
 
-ContactDetails.propTypes = {
-  contact: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    mobileNumber: PropTypes.string.isRequired
-  }).isRequired
-};
-
-export default ContactDetails;
+export default ContactCreate;

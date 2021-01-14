@@ -1,24 +1,24 @@
-import { API, createDataContext } from "utils";
+import {API, createDataContext} from 'utils';
 //! Types
 import {
   FETCH_ALL_CONTACTS,
   CREATE_CONTACT,
   UPDATE_CONTACT,
   DELETE_CONTACT,
-  CLEAR_ERROR,
-} from "./ContactsTypes";
+  CLEAR_ERROR
+} from './ContactsTypes';
 //! Reducer
-import { contactsReducer, INITIAL_STATE } from "./ContactsReducer";
+import {contactsReducer, INITIAL_STATE} from './ContactsReducer';
 
 const fetchAllContacts = (dispatch) => async () => {
   try {
-    dispatch({ type: FETCH_ALL_CONTACTS.PENDING });
-    const res = await API.get("/all");
-    dispatch({ type: FETCH_ALL_CONTACTS.SUCCESS, payload: res.data });
+    dispatch({type: FETCH_ALL_CONTACTS.PENDING});
+    const res = await API.get('/all');
+    dispatch({type: FETCH_ALL_CONTACTS.SUCCESS, payload: res.data});
   } catch (error) {
     dispatch({
       type: FETCH_ALL_CONTACTS.FAILURE,
-      payload: error,
+      payload: error
     });
   }
 };
@@ -28,73 +28,73 @@ const createContact = (dispatch) => async ({
   firstName,
   lastName,
   email,
-  mobileNumber,
+  mobileNumber
 }) => {
   try {
-    dispatch({ type: CREATE_CONTACT.PENDING });
-    const res = await API.post("/create", {
+    dispatch({type: CREATE_CONTACT.PENDING});
+    const res = await API.post('/create', {
       title,
       firstName,
       lastName,
       email,
-      mobileNumber,
+      mobileNumber
     });
-    dispatch({ type: CREATE_CONTACT.SUCCESS, payload: res.data });
+    dispatch({type: CREATE_CONTACT.SUCCESS, payload: res.data});
   } catch (error) {
     dispatch({
       type: CREATE_CONTACT.FAILURE,
-      payload: error,
+      payload: error
     });
   }
 };
 
 const updateContact = (dispatch) => async (
   contactId,
-  { title, firstName, lastName, email, mobileNumber }
+  {title, firstName, lastName, email, mobileNumber}
 ) => {
   try {
-    dispatch({ type: UPDATE_CONTACT.PENDING });
+    dispatch({type: UPDATE_CONTACT.PENDING});
     const res = await API.put(`/update?id=${contactId}`, {
       title,
       firstName,
       lastName,
       email,
-      mobileNumber,
+      mobileNumber
     });
-    dispatch({ type: UPDATE_CONTACT.SUCCESS, payload: res.data });
+    dispatch({type: UPDATE_CONTACT.SUCCESS, payload: res.data});
   } catch (error) {
     dispatch({
       type: UPDATE_CONTACT.FAILURE,
-      payload: error,
+      payload: error
     });
   }
 };
 
 const deleteContact = (dispatch) => async (contactId) => {
   try {
-    dispatch({ type: DELETE_CONTACT.PENDING });
+    dispatch({type: DELETE_CONTACT.PENDING});
     const res = await API.post(`/delete?id=${contactId}`);
-    dispatch({ type: DELETE_CONTACT.SUCCESS, payload: res.data });
+    dispatch({type: DELETE_CONTACT.SUCCESS, payload: res.data});
   } catch (error) {
     dispatch({
       type: DELETE_CONTACT.FAILURE,
-      payload: error,
+      payload: error
     });
   }
 };
 
 const clearError = (dispatch) => () => {
-  dispatch({ type: CLEAR_ERROR });
+  dispatch({type: CLEAR_ERROR});
 };
 
-export const { Provider, Context } = createDataContext(
+export const {Provider, Context} = createDataContext(
   contactsReducer,
   {
     fetchAllContacts,
     createContact,
     updateContact,
     deleteContact,
-    clearError,
+    clearError
   },
   INITIAL_STATE
 );
