@@ -36,13 +36,9 @@ const ContactDetails = ({contact}) => {
   //! Styles
   const classes = useStyles();
   //! Context
-  const {
-    state,
-    fetchAllContacts,
-    updateContact,
-    deleteContact,
-    clearError
-  } = useContext(ContactsContext);
+  const {state, updateContact, deleteContact, clearError} = useContext(
+    ContactsContext
+  );
   const {loading, error} = state;
   const {title, firstName, lastName, email, mobileNumber} = contact;
 
@@ -66,11 +62,6 @@ const ContactDetails = ({contact}) => {
       await updateContact(contact.id, values);
     }
   });
-
-  const removeContact = async () => {
-    await deleteContact(contact.id);
-    if (!error) fetchAllContacts();
-  };
 
   return (
     <ErrorHandler
@@ -195,7 +186,7 @@ const ContactDetails = ({contact}) => {
                 className={classes.button}
                 startIcon={<DeleteIcon />}
                 disabled={loading}
-                onClick={() => removeContact()}>
+                onClick={() => deleteContact(contact.id)}>
                 Delete
               </Button>
               {loading && (

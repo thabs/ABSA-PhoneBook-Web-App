@@ -32,7 +32,7 @@ const contactsReducer = (state, action) => {
       return {...state, loading: false, contacts: action.payload};
     case UPDATE_CONTACT.SUCCESS:
       const contacts = state.contacts.map((item) => {
-        if (item._id !== action.payload._id) return item;
+        if (item.id !== action.payload.id) return item;
         return {...item, ...action.payload};
       });
 
@@ -43,7 +43,7 @@ const contactsReducer = (state, action) => {
       };
     case DELETE_CONTACT.SUCCESS:
       const activeContacts = state.contacts.filter(
-        (item) => item._id !== action.payload._id
+        (item) => item.id !== action.payload.id
       );
       return {...state, loading: false, contacts: activeContacts};
     //! Failure
