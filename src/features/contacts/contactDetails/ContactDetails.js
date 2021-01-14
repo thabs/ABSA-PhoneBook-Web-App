@@ -8,19 +8,16 @@ import {
   Card,
   CardActions,
   CardContent,
-  Chip,
   FormControl,
   FormHelperText,
-  FormControlLabel,
-  FormLabel,
-  Input,
   InputLabel,
   MenuItem,
-  RadioGroup,
-  Radio,
   Select,
   TextField,
-  CircularProgress
+  CircularProgress,
+  List,
+  ListItem,
+  ListItemText
 } from '@material-ui/core';
 // icons
 import SaveIcon from '@material-ui/icons/Save';
@@ -31,6 +28,7 @@ import useStyles from './ContactDetails.styles';
 import {ErrorHandler} from 'components';
 //! Data
 import {titles} from 'models';
+import {dateToString} from 'utils';
 //! Context
 import {Context as ContactsContext} from '../state/ContactsContext';
 
@@ -156,6 +154,20 @@ const ContactDetails = ({contact}) => {
               value={values.mobileNumber}
               helperText={errors.mobileNumber}
             />
+            <List>
+              <ListItem>
+                <ListItemText
+                  primary="Date Created"
+                  secondary={dateToString(contact.dateTimeCreated)}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemText
+                  primary="Date Updated"
+                  secondary={dateToString(contact.dateTimeUpdated)}
+                />
+              </ListItem>
+            </List>
           </CardContent>
           <CardActions>
             <div className={classes.wrapper}>

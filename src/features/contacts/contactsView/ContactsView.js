@@ -33,6 +33,7 @@ const ContactsView = () => {
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
+              <TableCell />
               <TableCell>Title</TableCell>
               <TableCell>First Name</TableCell>
               <TableCell>Last Name</TableCell>

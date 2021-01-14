@@ -36,10 +36,10 @@ const ContactItem = ({contact}) => {
         <TableCell component="th" scope="row">
           {contact.title}
         </TableCell>
-        <TableCell align="right">{contact.firstName}</TableCell>
-        <TableCell align="right">{contact.lastName}</TableCell>
-        <TableCell align="right">{contact.email}</TableCell>
-        <TableCell align="right">{contact.mobileNumber}</TableCell>
+        <TableCell>{contact.firstName}</TableCell>
+        <TableCell>{contact.lastName}</TableCell>
+        <TableCell>{contact.email}</TableCell>
+        <TableCell>{contact.mobileNumber}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
